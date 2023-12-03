@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+     <!-- Google Fonte -->
+     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    
+    <div class="container-tarefas">
+        <h2 class="titulo">To-Do</h2>
+        
+        <div class="tarefa-adicionar-box">
+            <input class="tarefa-adicionar-campo" placeholder="Adicione uma tarefa" type="text">
+            <button class="tarefa-adicionar-btn" >Adicionar</button>
+        </div>
+        
+        <ul class="tarefas-lista tarefas-lista-escondida"></ul>
+    </div>
+
+    <dialog class="modal-editar">
+        <h2 class="modal-titulo">Editar Tarefa</h2>
+        <img class="modal-btn-fechar" src="imgs/fechar.svg" alt="Botão Fechar">
+
+        <div class="modal-editar-box">
+            <input class="modal-editar-input" type="text">
+            <button class="modal-editar-btn-salvar">Salvar</button>
+        </div>
+    </dialog>
+
+    <script src="script.js"></script>
+</body>
+</html>
