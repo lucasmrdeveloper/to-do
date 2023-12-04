@@ -96,9 +96,14 @@ function editar(btnEditar) {
     modalBtnFechar.onclick = fecharModal
 
     function salvar() {
-        conteudoDigitado.textContent = modalInput.value
+        if (modalInput.value == "") {
+            alert('Adicione uma tarefa no campo')
+        }
+        else {
+            conteudoDigitado.textContent = modalInput.value
 
-        fecharModal()
+            fecharModal()
+        }
     }
 
     function abrirModal() {
