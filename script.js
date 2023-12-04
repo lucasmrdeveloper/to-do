@@ -4,23 +4,20 @@ addEventListener('DOMContentLoaded', () => {
 })
 
 function adicionarData() {
+    const titulo = document.querySelector('.titulo')
     const data = new Date()
-
-    let diasSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
-    let nomeDiaSemana = diasSemana[data.getDay()];
-
-    let mesesAbreviados = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
-    let mesAbreviado = mesesAbreviados[data.getMonth()];
-
-    let dia = data.getDate()
+    const diasSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
+    const nomeDiaSemana = diasSemana[data.getDay()];
+    const dia = data.getDate()
+    const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+    const mes = meses[data.getMonth()];
     const ano = data.getFullYear()
 
-    const dataInteira = nomeDiaSemana + ", " + dia + " de " + mesAbreviado + " de " + ano
+    const dataInteira = nomeDiaSemana + ", " + dia + " de " + mes + " de " + ano
+
     const elementoData = document.createElement('div')
     elementoData.textContent = dataInteira
-
     elementoData.classList.add('data')
-    const titulo = document.querySelector('.titulo')
 
     titulo.insertAdjacentElement('afterend', elementoData)
 }
