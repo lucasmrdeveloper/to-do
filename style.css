@@ -26,10 +26,12 @@ body{
 
 .titulo{
     margin-bottom:10px;
+    text-align:center;
 }
 
 .data{
     margin-bottom:20px;
+    text-align:center;
 }
 
 .tarefa-adicionar-box{
