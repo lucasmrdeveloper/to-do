@@ -6,11 +6,11 @@ addEventListener('DOMContentLoaded', () => {
 function adicionarData() {
     const titulo = document.querySelector('.titulo')
     const data = new Date()
-    const diasSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
-    const nomeDiaSemana = diasSemana[data.getDay()];
+    const diasSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado']
+    const nomeDiaSemana = diasSemana[data.getDay()]
     const dia = data.getDate()
-    const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-    const mes = meses[data.getMonth()];
+    const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
+    const mes = meses[data.getMonth()]
     const ano = data.getFullYear()
 
     const dataInteira = nomeDiaSemana + ", " + dia + " de " + mes + " de " + ano
@@ -26,22 +26,33 @@ function adicionarTarefa() {
     const campoConteudoDigitado = document.querySelector('.tarefa-adicionar-campo')
     const btnAdicionar = document.querySelector('.tarefa-adicionar-btn')
 
+    // Carrega as tarefas salvas ao carregar a página
+    window.addEventListener('load', () => {
+        const tarefasSalvas = JSON.parse(localStorage.getItem('tarefas'))
+
+        if (tarefasSalvas) {
+            tarefasSalvas.forEach(tarefa => {
+                criarTarefa(tarefa)
+            })
+        }
+    })
+
 
     btnAdicionar.addEventListener('click', () => {
         if (campoConteudoDigitado.value == "") {
             alert('Adicione uma tarefa no campo')
         }
         else {
-            criarTarefa()
+            criarTarefa(campoConteudoDigitado.value)
             limparCampo(campoConteudoDigitado)
+            atualizarListaTarefasLocalStorage()
         }
     })
 
 
-    function criarTarefa() {
+    function criarTarefa(conteudo) {
         const tarefasBox = document.querySelector('.tarefas-lista')
         const tarefa = document.createElement('li')
-        const conteudoDigitado = document.querySelector('.tarefa-adicionar-campo').value
 
         if (tarefasBox.classList.contains('tarefas-lista-escondida')) {
             tarefasBox.classList.remove('tarefas-lista-escondida')
@@ -49,7 +60,7 @@ function adicionarTarefa() {
 
         const tarefaConteudo = `
             <input class="tarefa-concluir" type="checkbox" onchange="concluir(this)">
-            <p class="tarefa-conteudo-digitado">${conteudoDigitado}</p>
+            <p class="tarefa-conteudo-digitado">${conteudo}</p>
             <div class="tarefa-btns">
                 <img class="tarefa-btn-editar" src="imgs/editar.svg" onclick="editar(this)">
                 <img class="tarefa-btn-excluir" src="imgs/excluir.svg" onclick="excluir(this)">
@@ -58,8 +69,8 @@ function adicionarTarefa() {
 
         tarefa.classList.add('tarefa')
 
-        tarefasBox.append(tarefa)
         tarefa.innerHTML = tarefaConteudo
+        tarefasBox.append(tarefa)
     }
 }
 
@@ -72,7 +83,7 @@ function concluir(checkBox) {
 
     if (checkBox.checked) {
         tarefa.classList.add('tarefa-concluida')
-    }
+    } 
     else {
         tarefa.classList.remove('tarefa-concluida')
     }
@@ -98,7 +109,7 @@ function editar(btnEditar) {
         }
         else {
             conteudoDigitado.textContent = modalInput.value
-
+            atualizarListaTarefasLocalStorage()
             fecharModal()
         }
     }
@@ -121,4 +132,15 @@ function excluir(btnLixeira) {
     if (tarefasBox.hasChildNodes() == false) {
         tarefasBox.classList.add('tarefas-lista-escondida')
     }
+
+    atualizarListaTarefasLocalStorage()
+}
+
+function atualizarListaTarefasLocalStorage() {
+    const tarefas = Array.from(document.querySelectorAll('.tarefa'))
+    const tarefasParaSalvar = tarefas.map(tarefa => {
+        return tarefa.querySelector('.tarefa-conteudo-digitado').innerText
+    })
+
+    localStorage.setItem('tarefas', JSON.stringify(tarefasParaSalvar))
 }
