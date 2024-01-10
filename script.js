@@ -96,8 +96,6 @@ function limparCampo(campoConteudoDigitado) {
 }
 
 function concluir(checkBox) {
-    console.log('checkbox0', checkBox)
-
     const tarefa = checkBox.nextElementSibling
 
     if (checkBox.checked) {
