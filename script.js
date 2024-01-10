@@ -3,6 +3,8 @@ addEventListener('DOMContentLoaded', () => {
     adicionarData()
 })
 
+
+
 function adicionarData() {
     const titulo = document.querySelector('.titulo')
     const data = new Date()
@@ -35,6 +37,21 @@ function adicionarTarefa() {
                 criarTarefa(tarefa)
             })
         }
+    })
+
+    // Carrega as tarefas concluídas
+    window.addEventListener('load', () => {
+        const checkboxes = document.querySelectorAll('.tarefa-concluir');
+    
+        checkboxes.forEach(checkBox => {
+            const tarefa = checkBox.nextElementSibling;
+            const estaConcluida = localStorage.getItem(tarefa.textContent);
+
+            if (estaConcluida == 'concluida') {
+                checkBox.checked = true;
+                tarefa.classList.add('tarefa-concluida');
+            }
+        })
     })
 
 
@@ -79,13 +96,19 @@ function limparCampo(campoConteudoDigitado) {
 }
 
 function concluir(checkBox) {
+    console.log('checkbox0', checkBox)
+
     const tarefa = checkBox.nextElementSibling
 
     if (checkBox.checked) {
         tarefa.classList.add('tarefa-concluida')
+
+        localStorage.setItem(tarefa.textContent, 'concluida')
     } 
     else {
         tarefa.classList.remove('tarefa-concluida')
+
+        localStorage.removeItem(tarefa.textContent)
     }
 }
 
